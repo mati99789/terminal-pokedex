@@ -10,7 +10,7 @@ import (
 type cliCommand struct {
 	name        string
 	description string
-	callback    func(cfg *config) error
+	callback    func(cfg *config, arg ...string) error
 }
 
 var commands map[string]cliCommand
@@ -35,10 +35,11 @@ func startRepl(cfg *config) {
 			firstWord = userInputs[0]
 		}
 
+		args := userInputs[1:]
 		cmd, ok := commands[firstWord]
 
 		if ok {
-			cmd.callback(cfg)
+			cmd.callback(cfg, args...)
 		} else {
 			fmt.Println("Unknown command")
 		}
@@ -67,6 +68,11 @@ func init() {
 			name:        "mapb",
 			description: "go back to previous list of locations",
 			callback:    commandMapB,
+		},
+		"explore": {
+			name:        "explore",
+			description: "Locations that can be visited within the games. Locations make up sizable portions of regions, like cities or routes.",
+			callback:    commandExplore,
 		},
 	}
 }

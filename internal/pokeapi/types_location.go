@@ -7,3 +7,12 @@ type PokeAPI struct {
 		Name string `json:"name"`
 	} `json:"results"`
 }
+
+type LocationArea struct {
+	PokemonEncounters []struct {
+		Pokemon struct {
+			Name string `json:"name"`
+			URL  string `json:"url"`
+		} `json:"pokemon"`
+	} `json:"pokemon_encounters"`
+}
