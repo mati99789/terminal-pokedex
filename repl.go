@@ -39,7 +39,11 @@ func startRepl(cfg *config) {
 		cmd, ok := commands[firstWord]
 
 		if ok {
-			cmd.callback(cfg, args...)
+			error := cmd.callback(cfg, args...)
+
+			if error != nil {
+				fmt.Println(error)
+			}
 		} else {
 			fmt.Println("Unknown command")
 		}
@@ -73,6 +77,16 @@ func init() {
 			name:        "explore",
 			description: "Locations that can be visited within the games. Locations make up sizable portions of regions, like cities or routes.",
 			callback:    commandExplore,
+		},
+		"catch": {
+			name:        "catch",
+			description: "catch a pokemon",
+			callback:    commandCatch,
+		},
+		"inspect": {
+			name:        "inspect <pokemon_name>",
+			description: "View details about a caught Pokemon",
+			callback:    commandInspect,
 		},
 	}
 }
